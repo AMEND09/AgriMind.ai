@@ -855,7 +855,6 @@ const DefaultComponent = (): React.ReactNode => {
   const handleAddRainwaterPlan = (plan: any) => {
     setRainwaterPlans(prev => [...prev, plan]);
   };
-
   // Widget functionality
   const handleWidgetVisibilityChange = (widgetId: string, isVisible: boolean) => {
     // Implementation
@@ -865,9 +864,26 @@ const DefaultComponent = (): React.ReactNode => {
       )
     );
   };
-
   const handleLayoutChange = (layout: any) => {
-    setWidgetLayout(layout);
+    // Use React.useTransition to wrap state updates that might cause suspense
+    // This prevents errors when the layout update causes a component to suspend
+    React.startTransition(() => {
+      // Only update if the layout actually changed to prevent infinite loops
+      // Deep compare the layout objects to avoid unnecessary updates
+      const currentLayout = widgetLayout.map(({ i, x, y, w, h }) => ({ i, x, y, w, h }));
+      const newLayout = layout.map(({ i, x, y, w, h }: any) => ({ i, x, y, w, h }));
+      const layoutChanged = JSON.stringify(newLayout) !== JSON.stringify(currentLayout);
+      
+      if (layoutChanged) {
+        // Merge the new layout positions with existing widget data
+        const updatedLayout = widgetLayout.map(widget => {
+          const newPos = layout.find((item: any) => item.i === widget.i);
+          return newPos ? { ...widget, ...newPos } : widget;
+        });
+        
+        setWidgetLayout(updatedLayout);
+      }
+    });
   };
 
   // Issue management
