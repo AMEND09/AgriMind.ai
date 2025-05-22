@@ -1,6 +1,6 @@
 # AgriMind AI Documentation
 
-**Version:** 1.0.0 (Last Updated: YYYY-MM-DD)
+**Version:** 1.0.0 (Last Updated: 2025-05-20)
 
 **Repository:** [AMEND09/AgriMind.ai](https://github.com/AMEND09/AgriMind.ai)
 
