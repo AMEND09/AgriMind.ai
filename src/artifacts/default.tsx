@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { BarChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Bar } from 'recharts';
-import { Droplet, Leaf, LayoutDashboard, Info, Trash2, Edit3, RotateCw, Download, Upload, Settings, CloudRain, Pencil, X, UserCircle, LogIn, LogOut, BarChart3, Sprout, BugPlay, Cloud, Zap, Fuel, ChevronDown, ChevronRight, Calendar as CalendarIcon, PawPrint, HelpCircle, Spade, FlaskConical, Waves, Replace, Presentation, Sheet, Footprints } from 'lucide-react'; // Removed BadgeMinus
+import { Droplet, Leaf, LayoutDashboard, Info, Trash2, Edit3, RotateCw, Download, Upload, Settings, CloudRain, Pencil, X, UserCircle, LogIn, LogOut, BarChart3, Sprout, BugPlay, Cloud, Zap, Fuel, ChevronDown, ChevronRight, Calendar as CalendarIcon, PawPrint, HelpCircle, Spade, FlaskConical, Waves, Replace, Presentation, Sheet, Footprints, MessageSquare } from 'lucide-react'; // Removed BadgeMinus, Added MessageSquare
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 import {
@@ -651,6 +651,7 @@ const DefaultComponent = (): React.ReactNode => {
   
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showProfileSettings, setShowProfileSettings] = useState(false);
+  const [showGeminiChat, setShowGeminiChat] = useState(false); // New state for Gemini chat
 
   // Handle user login
   const handleLogin = (userData: { username: string; password: string }) => {
@@ -2579,41 +2580,36 @@ const DefaultComponent = (): React.ReactNode => {
                 <TabsContent value="history" className="h-full">
                   <HistoryPage
                     farms={farms}
-                    // Water Usage Props
-                    newWaterUsage={newWaterUsage}
-                    setNewWaterUsage={setNewWaterUsage}
-                    setIsAddingWaterUsage={setIsAddingWaterUsage} // Corrected: Pass setter
+                    setConfirmDelete={setConfirmDelete}
                     isEditingWaterUsage={isEditingWaterUsage}
                     setIsEditingWaterUsage={setIsEditingWaterUsage}
                     editingWaterUsage={editingWaterUsage}
                     setEditingWaterUsage={setEditingWaterUsage}
+                    newWaterUsage={newWaterUsage}
+                    setNewWaterUsage={setNewWaterUsage}
                     handleEditWaterUsage={handleEditWaterUsage}
-                    // Fertilizer Props
-                    newFertilizer={newFertilizer}
-                    setNewFertilizer={setNewFertilizer}
-                    setIsAddingFertilizer={setIsAddingFertilizer} // Corrected: Pass setter
                     isEditingFertilizer={isEditingFertilizer}
                     setIsEditingFertilizer={setIsEditingFertilizer}
                     editingFertilizer={editingFertilizer}
                     setEditingFertilizer={setEditingFertilizer}
+                    newFertilizer={newFertilizer}
+                    setNewFertilizer={setNewFertilizer}
                     handleEditFertilizer={handleEditFertilizer}
-                    // Harvest Props
-                    newHarvest={newHarvest}
-                    setNewHarvest={setNewHarvest}
-                    setIsAddingHarvest={setIsAddingHarvest} // Corrected: Pass setter
                     isEditingHarvest={isEditingHarvest}
                     setIsEditingHarvest={setIsEditingHarvest}
                     editingHarvest={editingHarvest}
                     setEditingHarvest={setEditingHarvest}
+                    newHarvest={newHarvest}
+                    setNewHarvest={setNewHarvest}
                     handleEditHarvest={handleEditHarvest}
-                    // Rotation Props
                     isAddingRotation={isAddingRotation}
                     setIsAddingRotation={setIsAddingRotation}
                     newRotation={newRotation}
                     setNewRotation={setNewRotation}
                     handleAddRotation={handleAddRotation}
-                    // General
-                    setConfirmDelete={setConfirmDelete}
+                    setIsAddingWaterUsage={setIsAddingWaterUsage}
+                    setIsAddingFertilizer={setIsAddingFertilizer}
+                    setIsAddingHarvest={setIsAddingHarvest}
                   />
                 </TabsContent>
 
@@ -2672,7 +2668,7 @@ const DefaultComponent = (): React.ReactNode => {
               <Button 
                 className="w-full"
                 onClick={() => {
-                  setShowLoginModal(true);
+                  setShowLoginModal(true); // Correctly open the login modal
                 }}
               >
                 <LogIn className="mr-2 h-4 w-4" />
@@ -2785,6 +2781,81 @@ const DefaultComponent = (): React.ReactNode => {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Hovering Gemini Button */}
+      {isLoggedIn && (
+        <button
+          className="hovering-help-button" // Re-using the same class for styling
+          title="Ask Gemini"
+          onClick={() => {
+            setShowGeminiChat(true); // Open Gemini chat
+            console.log("Gemini button clicked. GOOGLE_GEMINI_API_KEY is set in backend/settings.py.");
+          }}
+        >
+          <MessageSquare size={24} /> {/* Changed icon to MessageSquare */}
+        </button>
+      )}
+
+      {/* Gemini Chat Box */}
+      {isLoggedIn && showGeminiChat && (
+        <div style={{
+          position: 'fixed',
+          bottom: '80px', // Position above the Gemini button
+          right: '20px',
+          width: '350px',
+          height: '450px',
+          backgroundColor: 'white',
+          border: '1px solid #e0e0e0',
+          borderRadius: '8px',
+          boxShadow: '0 6px 12px rgba(0, 0, 0, 0.15)',
+          zIndex: 1001, // Ensure it's above the button but potentially below modals
+          display: 'flex',
+          flexDirection: 'column',
+          fontFamily: 'sans-serif'
+        }}>
+          <div style={{
+            padding: '12px 15px',
+            borderBottom: '1px solid #eee',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            backgroundColor: '#f7f7f7',
+            borderTopLeftRadius: '8px',
+            borderTopRightRadius: '8px'
+          }}>
+            <span style={{ fontWeight: 'bold', fontSize: '16px' }}>Ask Gemini</span>
+            <button 
+              onClick={() => setShowGeminiChat(false)} 
+              style={{ border: 'none', background: 'none', cursor: 'pointer', padding: '5px' }}
+              title="Close chat"
+            >
+              <X size={20} />
+            </button>
+          </div>
+          <div style={{ flexGrow: 1, padding: '15px', overflowY: 'auto', backgroundColor: '#fff' }}>
+            {/* Placeholder for chat messages */}
+            <p style={{ color: '#555', fontSize: '14px' }}>Gemini chat interface coming soon...</p>
+            {/* Example messages:
+            <div style={{ marginBottom: '10px', textAlign: 'right' }}><span style={{ backgroundColor: '#007bff', color: 'white', padding: '8px 12px', borderRadius: '15px 15px 0 15px', display: 'inline-block', maxWidth: '70%' }}>Hello Gemini!</span></div>
+            <div style={{ marginBottom: '10px', textAlign: 'left' }}><span style={{ backgroundColor: '#e9e9eb', color: 'black', padding: '8px 12px', borderRadius: '15px 15px 15px 0', display: 'inline-block', maxWidth: '70%' }}>Hello! How can I help you today?</span></div>
+            */}
+          </div>
+          <div style={{ padding: '10px 15px', borderTop: '1px solid #eee', backgroundColor: '#f7f7f7', borderBottomLeftRadius: '8px', borderBottomRightRadius: '8px' }}>
+            <input 
+              type="text" 
+              placeholder="Type your message..." 
+              style={{ 
+                width: '100%', 
+                padding: '10px', 
+                borderRadius: '20px', 
+                border: '1px solid #ddd',
+                boxSizing: 'border-box',
+                fontSize: '14px'
+              }} 
+            />
+          </div>
+        </div>
+      )}
     </>
     </Suspense>
   );

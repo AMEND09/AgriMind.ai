@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom';
+import GeminiChatWidget from './components/GeminiChatWidget'; // Import the chat widget
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <footer>
         {/*Application made by Aditya Mendiratta & Rahbe Abass for TSA Software Development 2025*/}
       </footer>
+      <GeminiChatWidget /> {/* Add the chat widget here */}
     </div>
   );
 }

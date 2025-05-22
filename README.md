@@ -4,27 +4,24 @@
 </div>
 A comprehensive, AI-powered farm management dashboard enabling agricultural professionals to manage fields, resources, sustainability, livestock, and reporting—all in one place.
 
-Access the frontend-only demo at https://amend09.github.io/AgriMind.ai/. The backend is not included in this demonstration.
+Access the frontend-only demo at [amend09.github.io/AgriMind.ai/](https://amend09.github.io/AgriMind.ai/). Note: Backend functionality is not available in this demo.
 
-For comprehensive technical information, consult the DOCUMENTATION.md file.
+For comprehensive technical information, including setup and architecture, consult the [DOCUMENTATION.md](DOCUMENTATION.md) file.
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![React](https://img.shields.io/badge/React-18.0.0-61dafb.svg)
+![React](https://img.shields.io/badge/React-18.x-61DAFB.svg)
+![Django](https://img.shields.io/badge/Django-5.x-092E20.svg)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6.svg)
 
 ---
 
 ## 📋 Table of Contents
 
 - [🎯 Overview](#-overview)
-- [✨ Features](#-features)
-  - [Core Functionality](#core-functionality)
-  - [Advanced & Smart Features](#advanced--smart-features)
-  - [Analytics](#analytics)
-  - [Integrations](#integrations)
-  - [Recent Additions](#recent-additions)
+- [✨ Key Features](#-key-features)
 - [🚀 Getting Started](#-getting-started)
 - [🛠️ Technical Stack](#-technical-stack)
-- [🔧 Development](#-development)
+- [🔧 Development Structure](#-development-structure)
 - [🗺️ Future Roadmap](#-future-roadmap)
 - [📄 License](#-license)
 - [🔗 References](#-references)
@@ -34,99 +31,31 @@ For comprehensive technical information, consult the DOCUMENTATION.md file.
 ## 🎯 Overview
 
 AgriMind AI empowers users to:
-- Optimize farm operations with data-driven insights.
-- Track sustainability and efficiency metrics including water, carbon, fertilizer, pesticides, and labor.
-- Plan, record, and analyze all aspects of farm management.
-- Harness AI for forecasting, recommendations, and compliance.
+- Optimize farm operations with data-driven insights and AI-powered recommendations.
+- Track sustainability metrics: water usage, carbon footprint, fertilizer/pesticide application, and organic practices.
+- Plan, record, and analyze all aspects of farm management from crop rotation to livestock health.
+- Utilize a dynamic dashboard with quick actions, weather forecasts, issue tracking, and task management.
 
 ---
 
-## ✨ Features
+## ✨ Key Features
 
-### Core Functionality
-
-- **Dashboard Overview:**
-  - Provides quick actions for water, fertilizer, and harvest logging.
-  - Displays sustainability scores, a 10-day weather forecast, active issues, a task manager, and upcoming activities.
-
-- **Field & Farm Management:**
-  - Facilitates adding, editing, and deleting farms with detailed information.
-  - Tracks crop rotations and farm history.
-  - Manages harvest and fertilizer records.
-
-- **Water Management:**
-  - Records and analyzes water usage.
-  - Calculates water efficiency scores and tracks irrigation.
-  - Presents historical graphs and quick-add actions for water data.
-
-- **Crop Planning:**
-  - Supports rotation scheduling.
-  - Includes calendar and event planning tools.
-  - Offers crop plan visualizations.
-
-- **Task & Issue Tracking:**
-  - Manages tasks with priority, due dates, and status.
-  - Allows viewing, managing, and resolving farm issues.
-
-- **Livestock Tracking:**
-  - Enables adding, editing, and monitoring livestock inventory and health.
-
-- **Soil Health Tracking:**
-  - Monitors pH, organic matter, nitrogen, phosphorus, potassium, and moisture.
-  - Visualizes soil quality with radar charts.
-
-- **Reporting & History:**
-  - Generates detailed logs for all resources and activities.
-  - Exports reports for compliance and analysis.
-
-- **Settings & Help:**
-  - Offers personalized application settings.
-  - Provides in-app instructions and an interactive walkthrough.
-
----
-
-### Advanced & Smart Features
-
-- **Sustainability & Compliance:**
-  - Tracks water and carbon footprints.
-  - Monitors pesticide usage with compliance alerts.
-  - Assesses organic practices.
-
-- **Weather Integration:**
-  - Integrates real-time 10-day weather forecasts (Open-Meteo API).
-  - Supports weather-based planning and irrigation optimization.
-
-- **Efficiency Analytics:**
-  - Delivers labor, energy, and resource efficiency dashboards.
-  - Identifies bottlenecks and streamlines operations.
-
----
-
-### Analytics
-
-- **Personalized Recommendations:**
-  - Generates recommendations for resource usage optimization.
-  - Delivers predictive insights for sustainability and productivity.
-- **Automated Alerts:**
-  - Issues automated alerts for overuse, inefficiency, and compliance notifications.
-
----
-
-### Integrations
-
-- **API Integrations:**
-  - Features live weather data integration via the Open-Meteo API.
-  - Incorporates a Django Backend with a PostgreSQL database, supporting cloud storage and external data sources.
-
----
-
-### Recent Additions
-
-- Livestock management dashboard.
-- Side navigation for quick feature access.
-- Refactored data/API service for modularity and backend integration.
-- Django backend for server-side features.
-- Enhanced soil health and pesticide tracking modules.
+- **Comprehensive Dashboard:** Centralized overview with quick actions, sustainability scores, weather forecasts, active issues, task management, and upcoming events.
+- **Farm & Field Management:** Detailed tracking of farms, crop rotations, harvest records, and fertilizer applications.
+- **Water Resource Management:** Tools for recording water usage, calculating efficiency, and visualizing historical irrigation data.
+- **Crop & Livestock Planning:** Support for crop rotation scheduling, event planning, and livestock inventory/health monitoring.
+- **Task & Issue Tracking:** Efficient management of farm tasks (priority, due dates, status) and issue reporting/resolution.
+- **Soil Health Monitoring:** Tracking of key soil parameters (pH, organic matter, nutrients) with visual quality assessments.
+- **Sustainability & Compliance:** Monitoring of water/carbon footprints, pesticide usage with compliance alerts, and organic practice assessment.
+- **Weather Integration:** Real-time 10-day weather forecasts via Open-Meteo API for informed planning.
+- **Reporting & History:** Detailed logs for all resources/activities, with export options for compliance and analysis.
+- **User Experience:** Personalized settings, in-app instructions, and an interactive walkthrough.
+- **AI-Powered Assistance:** Integrated Gemini chat for queries and assistance (requires API key).
+- **Recent Enhancements:**
+    - Modular data/API service layer for improved backend integration.
+    - Robust Django backend with PostgreSQL database support.
+    - Enhanced modules for soil health, pesticide tracking, and livestock management.
+    - Streamlined side navigation for intuitive feature access.
 
 For the complete commit history and the latest changes, refer to:
 [GitHub Commits](https://github.com/AMEND09/AgriMind.ai/commits?per_page=20&sort=updated)
@@ -135,67 +64,65 @@ For the complete commit history and the latest changes, refer to:
 
 ## 🚀 Getting Started
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/AMEND09/AgriMind.ai.git
-   cd AgriMind.ai
-   ```
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-3. **Start the development server:**
-   ```bash
-   npm run dev
-   ```
-4. **Build for production:**
-   ```bash
-   npm run build
-   ```
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/AMEND09/AgriMind.ai.git
+    cd AgriMind.ai
+    ```
+2.  **Install frontend dependencies:**
+    ```bash
+    npm install
+    ```
+3.  **Set up the backend (Python/Django):**
+    Refer to the detailed instructions in [DOCUMENTATION.md](DOCUMENTATION.md#4-setup-and-running-the-project).
+4.  **Configure Environment Variables:**
+    Ensure API keys (e.g., Google Gemini) and database settings are configured as per `DOCUMENTATION.md`.
+5.  **Run development servers:**
+    *   Frontend: `npm run dev`
+    *   Backend: (From `backend/` directory) `python manage.py runserver`
+6.  **Build for production:**
+    ```bash
+    npm run build
+    ```
 
-**Access the web application:**
-[AgriMind AI Web App](https://amend09.github.io/AgriMind.ai/)
+**Access the web application (development):**
+Frontend typically at `http://localhost:5173`, Backend at `http://localhost:8000`.
 
 ---
 
 ## 🛠️ Technical Stack
 
-For comprehensive technical information, consult the DOCUMENTATION.md file.
+For comprehensive technical information, consult the [DOCUMENTATION.md](DOCUMENTATION.md) file.
 
-- **Frontend:** React 18 + TypeScript, Tailwind CSS, shadcn/ui, Lucide Icons, Recharts
-- **State Management & Data:** Utilizes React Hooks, a data storage abstraction layer, and integrates the Open-Meteo API.
-- **Development & Deployment:** Vite, Jest, GitHub Pages
-- **Backend:** Python (Django)
+- **Frontend:** React 18+ (TypeScript), Vite, Tailwind CSS, shadcn/ui, Lucide Icons, Recharts.
+- **State Management & Data:** React Hooks, Context API, Custom DataStorage Abstraction, Open-Meteo API.
+- **Backend:** Python (Django 5+), Django REST Framework, PostgreSQL.
+- **Development & Deployment:** ESLint, Prettier, GitHub Actions (CI/CD planned), GitHub Pages (for demo).
 
 ---
 
-## 🔧 Development
+## 🔧 Development Structure
 
-For comprehensive technical information, consult the DOCUMENTATION.md file.
+For comprehensive technical information, consult the [DOCUMENTATION.md](DOCUMENTATION.md) file.
 
 The frontend source code resides in the `src/` directory:
 ```
 src/
 ├── artifacts/         # Core application logic, types, and feature-specific components
-│   ├── components/    # Custom React components for specific features (TaskManager, LoginPage, etc.)
+│   ├── components/    # Custom React components (TaskManager, LoginPage, HistoryPage, etc.)
 │   ├── models/        # Data models (e.g., sustainability.ts)
-│   ├── default.tsx    # Main orchestrating component
+│   ├── default.tsx    # Main orchestrating UI component
 │   ├── types.ts       # Core TypeScript type definitions
 │   └── utils.ts       # Utility functions (calculations, UI helpers)
-├── components/        # Reusable UI components
-│   ├── ui/            # shadcn/ui components (Alert, Badge, Card, Form, Tabs)
-│   └── layout.tsx     # Main layout component
+├── components/        # Reusable UI components (shadcn/ui based and custom)
 ├── hooks/             # Custom React hooks
-├── lib/               # Utility functions and libraries (e.g., clsx, tailwind-merge)
-├── pages/             # Page-level components (e.g., Home.tsx)
-├── router/            # Routing configuration
-├── styles/            # Styling-related files (e.g., theme.ts)
-├── typings/           # Custom TypeScript type definitions
+├── lib/               # General utility functions
+├── services/          # Data storage and API interaction services
 ├── App.tsx            # Main application layout component
-├── index.css          # Global stylesheets, Tailwind CSS setup
-└── main.tsx           # Entry point of the React application
+├── main.tsx           # Entry point of the React application
+└── ... (other configuration and style files)
 ```
-The Django backend code is located in the `backend/backend/` directory. For more details on the overall file structure, refer to [DOCUMENTATION.md](DOCUMENTATION.md).
+The Django backend code is located in the `backend/` directory. For a detailed file structure, refer to [DOCUMENTATION.md](DOCUMENTATION.md#3-file-structure).
 
 ---
 

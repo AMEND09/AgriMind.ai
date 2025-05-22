@@ -57,6 +57,26 @@ export const walkthroughStyles = `
   .animate-bounce-gentle {
     animation: bounce-gentle 2s infinite;
   }
+  .hovering-help-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007bff; /* Example blue color */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Ensure it's on top */
+    cursor: pointer;
+  }
+  .hovering-help-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
 `;
 
 export const calculateWaterEfficiency = (

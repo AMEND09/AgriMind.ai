@@ -1,6 +1,6 @@
 # AgriMind AI Documentation
 
-**Version:** 1.0.0 (Last Updated: 2025-05-21)
+**Version:** 1.0.0 (Last Updated: YYYY-MM-DD)
 
 **Repository:** [AMEND09/AgriMind.ai](https://github.com/AMEND09/AgriMind.ai)
 
@@ -117,15 +117,7 @@ AgriMind AI/
 *   **`LICENSE`**: Software license.
 *   **`README.default.md`**: Template README.
 *   **`README.md`**: Main project README.
-*   **`components.json`**: Configuration file for `shadcn/ui`. It defines the styling, component paths, Tailwind CSS setup, and aliases for importing components and utilities. Key settings include:
-    *   `style`: "default" (shadcn/ui style).
-    *   `tsx`: `true` (components are TypeScript).
-    *   `tailwind.config`: `tailwind.config.js`.
-    *   `tailwind.css`: `src/index.css`.
-    *   `tailwind.baseColor`: "slate".
-    *   `tailwind.cssVariables`: `true`.
-    *   `aliases.components`: "src/components".
-    *   `aliases.utils`: "src/lib/utils".
+*   **`components.json`**: Configuration for `shadcn/ui`, defining styling, component paths, Tailwind CSS setup (using `tailwind.config.js` and `src/index.css` with "slate" as base color and CSS variables enabled), and aliases (`src/components` for components, `src/lib/utils` for utilities). Components are TypeScript (`tsx: true`).
 *   **`index.html`**: Vite application entry HTML.
 *   **`jsconfig.json`**: JavaScript language server configuration.
 *   **`package-lock.json`**: Exact dependency versions.
@@ -148,7 +140,7 @@ This directory contains the Django project for AgriMind AI's backend.
     *   Sets `DJANGO_SETTINGS_MODULE` to `backend.settings`.
 
 *   **`backend/backend/` (Project Configuration Directory)**:
-    *   **`settings.py`**: Contains all the configuration for the Django project, including database settings, installed apps (such as the `api` app), middleware, template configurations, and static files.
+    *   **`settings.py`**: Contains all the configuration for the Django project, including database settings, installed apps (e.g., `api`), middleware, template configurations, static files, and API keys (like `GOOGLE_GEMINI_API_KEY`).
     *   **`urls.py`**: The main URL configuration for the project. It defines project-level URL routing, directing requests to appropriate views, including those within the `api` app.
     *   **`wsgi.py` / `asgi.py`**: Entry points for WSGI/ASGI compatible web servers to serve the Django application.
     *   **`__pycache__/`**: Contains compiled Python bytecode for faster execution of project configuration modules.
@@ -206,10 +198,10 @@ Vite-specific type declarations.
 *   **`layout.tsx`**:
     *   A React functional component that acts as a layout wrapper. It accepts `children` as a prop and renders them, providing a basic structure for application pages or sections.
 
-*   **`ui/` (shadcn/ui Components)**: This directory hosts UI components generated via the `shadcn/ui` CLI. These components are built using Radix UI primitives and styled with Tailwind CSS.
+*   **`ui/` (shadcn/ui Components)**: This directory hosts UI components generated via the `shadcn/ui` CLI. These components are built using Radix UI primitives and styled with Tailwind CSS. Examples include `Alert`, `Badge`, `Card`, `Form`, `Tabs`, etc., providing a consistent look and feel.
     *   **`alert.tsx` (`Alert`, `AlertTitle`, `AlertDescription`)**:
         *   Provides styled alert components for displaying important messages.
-        *   Supports variants including `default` and `destructive`.
+        *   Supports variants like `default` and `destructive`.
         *   Uses `cva` (class-variance-authority) for managing style variants.
     *   **`badge.tsx` (`Badge`, `badgeVariants`)**:
         *   Renders small badge elements for tags, statuses, or counts.
@@ -252,8 +244,7 @@ This directory houses the primary logic, data structures, and complex, feature-s
     *   `CarbonSequestrationActivity`: Records activities that sequester carbon.
 
 *   **`default.tsx`**:
-    *   A large central React component that orchestrates the UI by integrating various application components.
-    *   Manages state for features including: walkthroughs (`showWalkthrough`), expanded UI items, planning activities (e.g., `newPlantingPlan`), user authentication, farm data, tasks, issues, and livestock information.
+    *   A large, central React component that orchestrates much of the main application's UI and state. It integrates various sub-components and manages state for features like the interactive walkthrough, UI element expansion, planning activities (e.g., `newPlantingPlan`), user authentication, farm data, tasks, issues, and livestock information.
     *   Implements handlers for core application functionalities:
         *   Walkthrough initiation and completion.
         *   Creation, modification, and deletion of plan items.
@@ -262,8 +253,9 @@ This directory houses the primary logic, data structures, and complex, feature-s
         *   Issue resolution and task deletion.
         *   Data import and export functionalities.
         *   Fetching user location and corresponding weather data.
-        *   Control of widget visibility and dynamic layout adjustments.
-    *   This component renders and coordinates the user interface elements corresponding to the managed state and handlers.
+        *   Control of widget visibility and dynamic layout adjustments via `DraggableWidgetLayout`.
+        *   Manages the display of modals for various actions (e.g., adding farm data, login, profile settings) and the Gemini chat interface.
+    *   This component renders and coordinates the user interface elements corresponding to the managed state and handlers, forming the backbone of the user-facing application.
 
 *   **`components/` (within `src/artifacts/`)**: Contains more specialized, feature-rich React components.
     *   **`CropFilter.tsx`**: A component that allows users to filter a list of farms based on the crop type. It dynamically generates filter options from the available crops.
@@ -277,47 +269,54 @@ This directory houses the primary logic, data structures, and complex, feature-s
 ## 4. Setup and Running the Project
 
 1.  **Prerequisites:**
-    *   Node.js (version 18.x or newer)
+    *   Node.js (version 18.x or newer recommended)
     *   npm or yarn
-    *   Python (version 3.8 or newer)
+    *   Python (version 3.8 or newer recommended)
     *   pip (Python package installer)
+    *   PostgreSQL (or other Django-compatible database, configured in `backend/backend/settings.py`)
 2.  **Clone the repository:**
     ```bash
-    git clone https://github.com/AMEND09/AgriMind AI.git
-    cd AgriMind AI
+    git clone https://github.com/AMEND09/AgriMind.ai.git
+    cd AgriMind.ai
     ```
 3.  **Frontend Setup:**
     ```bash
+    # Navigate to the project root if not already there
     npm install
     # or
     # yarn install
     ```
 4.  **Backend Setup (Django):**
     ```bash
-    cd backend/backend
+    cd backend # Navigate to the backend directory
     python -m venv venv  # Create a virtual environment
     source venv/bin/activate  # On Windows: venv\Scripts\activate
-    pip install -r requirements.txt # A requirements.txt file detailing all backend dependencies is required.
-                                     # Alternatively, install core dependencies: pip install Django djangorestframework
+    # Ensure you have a requirements.txt or install manually:
+    # pip install Django djangorestframework psycopg2-binary djangorestframework-simplejwt django-cors-headers
+    # If requirements.txt exists:
+    # pip install -r requirements.txt 
     python manage.py migrate # Apply database migrations
-    cd ../..
+    # Optional: Create a superuser for Django admin
+    # python manage.py createsuperuser
+    cd .. # Return to the project root
     ```
 5.  **Environment Variables:**
-    *   Frontend: Create a `.env` file in the root directory for environment-specific configurations. Refer to `.env.example` if available for structure and required variables.
-    *   Backend: Configure Django settings in `backend/backend/backend/settings.py` or use environment variables as defined therein.
+    *   Frontend: If needed, create a `.env` file in the root directory for frontend-specific configurations (e.g., API base URLs if different from default).
+    *   Backend: Configure Django settings in `backend/backend/settings.py`. Sensitive information like `SECRET_KEY`, database credentials, and `GOOGLE_GEMINI_API_KEY` should ideally be managed via environment variables in a production setting. For development, you can set them directly in `settings.py` but be cautious with version control.
 6.  **Run the development server (frontend):**
     ```bash
+    # From the project root
     npm run dev
     # or
     # yarn dev
     ```
-    (The frontend development server will be accessible, typically at `http://localhost:5173`)
+    (The frontend development server will typically be accessible at `http://localhost:5173`)
 7.  **Run the backend server (Django):**
     ```bash
-    cd backend/backend
+    # From the project root
+    cd backend
     source venv/bin/activate # If not already activated
     python manage.py runserver
-    cd ../..
+    cd .. # Optional: return to project root in another terminal
     ```
-    (The Django backend server will be accessible, typically at `http://localhost:8000`)
-8.  Open your browser and navigate to the frontend URL.
+    (The Django backend server will typically be accessible at `http://localhost:8000`)

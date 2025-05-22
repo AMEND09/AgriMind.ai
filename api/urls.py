@@ -3,6 +3,7 @@ from django.urls import path
 from .views import (
     ImportDataView, ExportDataView, # Assuming these are your existing views
     SaveLocalStorageView, LoadLocalStorageView,
+    GeminiChatView, # Add GeminiChatView
     # Add other view imports here e.g., FarmListCreateView, FarmDetailView etc.
 )
 # from .views import UserLoginView, UserRegisterView # If you have custom login/register
@@ -18,4 +19,5 @@ urlpatterns = [
     
     path('sync/localstorage/save/', SaveLocalStorageView.as_view(), name='save_local_storage'),
     path('sync/localstorage/load/', LoadLocalStorageView.as_view(), name='load_local_storage'),
+    path('chat/gemini/', GeminiChatView.as_view(), name='gemini_chat'), # New URL for Gemini chat
 ]

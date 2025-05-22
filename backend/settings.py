@@ -77,13 +77,14 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
+# This section configures the database connection for the Django backend.
+# UI elements like hovering buttons are managed in the frontend code (HTML/CSS/JavaScript).
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'ecosprout',
         'USER': 'rahbe',
-        'PASSWORD': 'jcpsRA0087',
+        'PASSWORD': 'jcpsRA0087',  # Ensure these credentials are correct for your PostgreSQL setup
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -140,8 +141,10 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',  # Add this
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        # If you primarily use JWT, you might place JWTAuthentication first,
-        # but TokenAuthentication is needed for `Token ${token}` headers.
     ],
 }
+
+# Google Gemini API Key
+# IMPORTANT: Use environment variables for production!
+GOOGLE_GEMINI_API_KEY = "YOUR_API_KEY"
 

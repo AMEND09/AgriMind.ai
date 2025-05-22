@@ -16,6 +16,8 @@ from .serializers import (
 )
 # Import other necessary serializers if they are not already imported
 # from .serializers import FarmSerializer, TaskSerializer, IssueSerializer, CropPlanEventSerializer, PlanItemSerializer, FuelRecordSerializer, SoilRecordSerializer, EmissionSourceSerializer, SequestrationActivitySerializer, EnergyRecordSerializer, LivestockSerializer
+from django.conf import settings # Import settings
+import google.generativeai as genai # Import Gemini AI SDK
 
 
 class ImportDataView(APIView):
@@ -158,3 +160,51 @@ class LoadLocalStorageView(APIView):
         except Exception as e:
             # Log the exception e for debugging
             return Response({'error': 'Could not load localStorage data.', 'details': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class GeminiChatView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        user_message = request.data.get('message')
+        if not user_message:
+            return Response({'error': 'No message provided'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            genai.configure(api_key=settings.GOOGLE_GEMINI_API_KEY)
+            model = genai.GenerativeModel('gemini-1.5-flash-latest') # Using flash model as per your example context
+
+            # Attempt to fetch user-specific data for context
+            user_context_summary = "The user is interacting with the AgriMind application."
+            try:
+                user_storage = UserLocalStorage.objects.get(user=request.user)
+                # Be cautious about sending large or sensitive data directly.
+                # This is a simplified example. You might want to summarize or select specific parts.
+                storage_data_preview = str(user_storage.data)[:500] # Preview of stored data
+                user_context_summary += f" They have some data stored: {storage_data_preview}..."
+            except UserLocalStorage.DoesNotExist:
+                user_context_summary += " They currently have no specific data synced via UserLocalStorage."
+            # You could expand this by fetching other user-specific data from Farm, Task models
+            # if they are linked to the user.
+
+            prompt = f"""You are an AI assistant for AgriMind, an agricultural management application.
+            User's context: {user_context_summary}
+            User's question: "{user_message}"
+
+            Please provide a helpful and concise answer based on the user's question and their context.
+            If the question is about their specific data and the provided context is insufficient,
+            you can state that you need more specific information from their records or suggest
+            where they might find it in the application.
+            Keep your responses focused on agricultural advice or app usage.
+            """
+
+            response = model.generate_content(prompt)
+            
+            # Check for empty or problematic response from Gemini
+            if not response.text:
+                 return Response({'reply': "I'm sorry, I couldn't generate a response at this moment. Please try again."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+            return Response({'reply': response.text}, status=status.HTTP_200_OK)
+        except Exception as e:
+            # Log the exception e for server-side debugging
+            print(f"Gemini API Error: {str(e)}")
+            return Response({'error': 'Failed to get response from AI assistant.', 'details': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

@@ -155,6 +155,23 @@ export class ApiService {
   }
 
   // ... other methods for setData, removeData would now be addEntity, updateEntity, deleteEntity
+
+  static async chatWithGemini(message: string): Promise<{ reply: string }> {
+    if (!ApiService.isLoggedIn()) {
+      throw new Error('User not logged in. Cannot use chat feature.');
+    }
+    try {
+      const response = await request<{ reply: string }>('chat/gemini/', 'POST', { message });
+      return response;
+    } catch (error) {
+      console.error('Failed to send message to Gemini assistant:', error);
+      // Return a user-friendly error message structure
+      if (error instanceof Error) {
+        return { reply: `Error communicating with the assistant: ${error.message}` };
+      }
+      return { reply: 'An unknown error occurred while trying to chat.' };
+    }
+  }
 }
 
 // The old DataStorage methods for walkthrough can remain if they are purely client-side
